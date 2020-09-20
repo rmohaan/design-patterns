@@ -1,13 +1,45 @@
 package com.codewithmosh.template;
 
-public class Window {
+public abstract class Window {
+    private WindowAction windowAction;
+
+    public Window() {
+        windowAction = new WindowAction();
+    }
     public void close() {
-        //TODO: custom windows may need to execute some code before the window
-        // is closed.
+       windowAction.PreClose();
+       augumentedClose();
+       windowAction.PostClose();
+    }
 
-        System.out.println("Removing the window from the screen");
+    protected abstract void augumentedClose();
+}
 
-        //TODO: custom windows may need to execute some code after the window
-        // is closed.
+public class CustomWindow1 extends Window {
+
+    protected void augumentedClose(){
+        System.out.println("Custom Window1 closing...");
+    }
+
+}
+
+public class CustomWindow2 extends Window {
+
+    protected void augumentedClose(){
+        System.out.println("Custom Window2 closing...");
+    }
+
+}
+
+
+public class WindowAction {
+    public void PreClose() {
+        System.out.println("Before closing");
+    }
+
+    public void PostClose() {
+        System.out.println("After Closing");
     }
 }
+
+
